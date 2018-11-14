@@ -17,13 +17,13 @@ $xmldata = '<?xml version="1.0" encoding="UTF-8"?>
         <definition name="html" author="Bob">
             The standard markup language for creating web pages and web applications.
         </definition>
-        <definition name="css" author="kartel">
+        <definition name="css" author="Darke">
             A style sheet language used for describing the presentation of a document written in a markup language.
         </definition>
-        <definition name="javascript" author="gully bop">
+        <definition name="javascript" author="Mavado">
             A lightweight, interpreted programming language with first-class functions that adds interactivity to your website.
         </definition>
-        <definition name="php" author="alkaline">
+        <definition name="php" author="Aidonia">
             A server-side scripting language, and a powerful tool for making dynamic and interactive websites
         </definition>
     
