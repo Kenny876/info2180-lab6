@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dictionary</title>
-        <script type="text/javascript" src="js/search.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <link rel="stylesheet" href="css/dict.css" type="text/css" />
-</head>    
-
+  <title>SEARCH</title>
+   <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
 <body>
-    <div id="overall">
-        <div id="pagetitle">Dictionary</div>
-        <div id="main">
-            <h3>Search for a word</h3>
-            <span class="example">eg. Definition, ajax, bar, html, css, javascript, php</span>
-            <form id="search-form">
-                <input type="text" name="q" placeholder="Eg. bar" id="search-bar"/>
-                <input type="Submit" value="Search" id="submission"/>
-                <input type="Submit" value="Get all definitions" id="all"/>
-            </form>
-            <hr>
-            <div id="result">
-                <span>Result</span>
-                <div id="update" >
-                    
-                </div>
-            </div>
-        </div>
+    <div class= "web">Web Dictionary</div>
+  <div class=try>
+      <p>Lookup the definition of a word(e.g. ajax, html, bar, sjavascript or css)</p>
+      <form class=search>
+             <input type="text" id="word" > 
+             <button onclick= 'mysearch()' class= 'button' id= 'search' type= "button">Search</button>
+             <button onclick= 'getall()' class= 'button' id= 'gall' type= "button">Get all definitions</button>
+        </form>
+    <p><h3>Result</h3></p>
+    <div id='result' class="result"> </div>
     </div>
 </body>
-</html>
+<script type="text/javascript">
+  function mysearch(){
+    var word = document.getElementById("word").value;
+    let xml = new  XMLHttpRequest();
+        xml.onreadystatechange = function(){
+           if(xml.readyState === 4 && xml.status === 200){
+              var t = document.getElementById('result');
+              t.innerHTML = xml.responseText;
+              
+           }
+       };
+       xml.open("GET","request.php?q=definition",true);
+       xml.send();
+       xml.open("GET","request.php?q="+word,true);
+       xml.send();
+       
+     };
+     function getall(){
+         
+         let xml = new XMLHttpRequest();
+         xml.onreadystatechange = function(){
+           if(xml.readyState === 4 && xml.status === 200){
+               
+               let output = "<ol>";
+               let text = xml.responseXML;
+               let terms = text.getElementsByTagName("definition");
+               for(let counter = 0; counter<terms.length;counter++){
+                   output+="<li><h3>"+terms[counter].getAttribute("name")+"</h3><p>"+terms[counter].childNodes[0].nodeValue+"</p><p> -"+terms[counter].getAttribute("author")+"</p></li>";
+               }
+               output+="</ol>";
+               var t = document.getElementById('result');
+               t.innerHTML = output;
+           }
+       };
+       xml.open("GET","request.php?q=&all=true",true);
+       xml.send();
+     };
+</script>
+</html> 
